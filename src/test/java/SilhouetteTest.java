@@ -2,7 +2,7 @@ import org.junit.Before;
 
 import java.util.*;
 
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -18,20 +18,24 @@ public class SilhouetteTest {
         buildings = new ArrayList<Building>();
 
         //TODO: put here your class;
-        silhouette = new Silhouette() {
-            public Iterable<Coordinate> calculateSilhouette(Collection<Building> buildings) {
-                return Arrays.asList(Coordinate.of(0, 2), Coordinate.of(3, 10), Coordinate.of(2, 10), Coordinate.of(3, 0));
-            }
-        };
+        silhouette = new Solution();
     }
+
+    @org.junit.Test
+    public void testCalculateSilhouetteNoBuildings() throws Exception {
+
+        List<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
+        assertThat(coordinates.size(),is(0));
+    }
+    
 
     @org.junit.Test
     public void testCalculateSilhouetteOneHouse() throws Exception {
         buildings.add(new Building(2, 3, 10));
 
-        Iterable<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
+        List<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
 
-        assertThat(coordinates, contains(Coordinate.of(0, 2), Coordinate.of(2, 10), Coordinate.of(3, 10), Coordinate.of(3, 0)));
+        assertThat(coordinates, contains(Coordinate.of(2, 0), Coordinate.of(2, 10), Coordinate.of(3, 10), Coordinate.of(3, 0)));
     }
 
     @org.junit.Test
@@ -39,7 +43,7 @@ public class SilhouetteTest {
         buildings.add(new Building(2, 3, 10));
         buildings.add(new Building(4, 5, 2));
 
-        Iterable<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
+        List<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
 
         assertThat(coordinates, contains(Coordinate.of(2, 0), Coordinate.of(2, 10), Coordinate.of(3, 10), Coordinate.of(3, 0),
                 Coordinate.of(4, 0), Coordinate.of(4, 2), Coordinate.of(5, 2), Coordinate.of(5, 0)));
@@ -51,7 +55,7 @@ public class SilhouetteTest {
         buildings.add(new Building(2, 6, 10));
         buildings.add(new Building(4, 7, 2));
 
-        Iterable<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
+        List<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
 
         assertThat(coordinates, contains(Coordinate.of(2, 0), Coordinate.of(2, 10), Coordinate.of(6, 10),
                 Coordinate.of(7, 2), Coordinate.of(7, 0)));
@@ -71,7 +75,7 @@ public class SilhouetteTest {
         }
 
 
-        Iterable<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
+        List<Coordinate> coordinates = silhouette.calculateSilhouette(buildings);
 
         //todo:Add proper check, hard to say yet what it is.
         assertThat(coordinates, contains(Coordinate.of(2, 0), Coordinate.of(2, 10), Coordinate.of(6, 10),

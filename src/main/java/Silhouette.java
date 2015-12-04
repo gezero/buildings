@@ -1,7 +1,8 @@
 import java.util.Collection;
+import java.util.List;
 
 /**
  */
 public interface Silhouette {
-    Iterable<Coordinate> calculateSilhouette(Collection<Building> buildings);
+    List<Coordinate> calculateSilhouette(Collection<Building> buildings);
 }
