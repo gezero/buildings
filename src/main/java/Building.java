@@ -23,4 +23,13 @@ public class Building {
     public int getHeight() {
         return height;
     }
+
+    @Override
+    public String toString() {
+        return "Building{" +
+                "left=" + left +
+                ", right=" + right +
+                ", height=" + height +
+                '}';
+    }
 }
