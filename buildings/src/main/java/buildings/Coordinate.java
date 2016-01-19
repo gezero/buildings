@@ -1,5 +1,7 @@
+package buildings;
+
 /**
- * Created by jiri.peinlich on 04/12/2015.
+ * This class represents x/y coordinate in a 2D plane
  */
 public class Coordinate {
 

@@ -1,5 +1,7 @@
+package buildings;
+
 /**
- * Created by jiri.peinlich on 04/12/2015.
+ * This class represents a front view of a rectangular building.
  */
 public class Building {
     final int left;
@@ -26,7 +28,7 @@ public class Building {
 
     @Override
     public String toString() {
-        return "Building{" +
+        return "buildings.Building{" +
                 "left=" + left +
                 ", right=" + right +
                 ", height=" + height +
