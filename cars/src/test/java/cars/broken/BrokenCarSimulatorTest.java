@@ -1,7 +1,7 @@
 package cars.broken;
 
-import cars.Coordinate;
 import cars.Track;
+import math.Coordinate;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -19,29 +19,29 @@ public class BrokenCarSimulatorTest {
 
     Track.TrackElement[][] track1 =
             {
-                    {START,EMPTY,OBSTACLE,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY},
-                    {EMPTY,EMPTY,OBSTACLE,OBSTACLE,EMPTY,EMPTY,EMPTY,OBSTACLE},
-                    {EMPTY,EMPTY,EMPTY,EMPTY,OBSTACLE,EMPTY,EMPTY,OBSTACLE},
-                    {EMPTY,EMPTY,EMPTY,OBSTACLE,OBSTACLE,EMPTY,EMPTY,EMPTY},
-                    {EMPTY,EMPTY,EMPTY,EMPTY,EMPTY,OBSTACLE,EMPTY,EMPTY},
-                    {OBSTACLE,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY},
-                    {EMPTY,OBSTACLE,EMPTY,EMPTY,EMPTY,OBSTACLE,OBSTACLE,OBSTACLE},
-                    {EMPTY,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY,FINISH}
+                    {START, EMPTY, OBSTACLE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                    {EMPTY, EMPTY, OBSTACLE, OBSTACLE, EMPTY, EMPTY, EMPTY, OBSTACLE},
+                    {EMPTY, EMPTY, EMPTY, EMPTY, OBSTACLE, EMPTY, EMPTY, OBSTACLE},
+                    {EMPTY, EMPTY, EMPTY, OBSTACLE, OBSTACLE, EMPTY, EMPTY, EMPTY},
+                    {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, OBSTACLE, EMPTY, EMPTY},
+                    {OBSTACLE, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY},
+                    {EMPTY, OBSTACLE, EMPTY, EMPTY, EMPTY, OBSTACLE, OBSTACLE, OBSTACLE},
+                    {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, FINISH}
             };
-    private Coordinate track1Start = new Coordinate(0,0);
+    private Coordinate track1Start = new Coordinate(0, 0);
 
 
     @Test
-    public void testTrackOne(){
+    public void testTrackOne() {
         Track track = new Track(track1);
-        BrokenCarSimulator simulator = new BrokenCarSimulator(track,track1Start);
+        BrokenCarSimulator simulator = new BrokenCarSimulator(track, track1Start);
 
 
         Track.TrackElement finish = simulator.go(Arrays.asList(STRAIGHT, STRAIGHT, STRAIGHT, STRAIGHT, TURN, STRAIGHT,
                 TURN, TURN, TURN, STRAIGHT, TURN, STRAIGHT, STRAIGHT, TURN,
                 TURN, TURN, STRAIGHT, STRAIGHT, TURN, STRAIGHT, STRAIGHT, STRAIGHT));
 
-        assertThat(finish,is(Track.TrackElement.FINISH));
+        assertThat(finish, is(Track.TrackElement.FINISH));
 
     }
 

@@ -1,28 +1,28 @@
 package knight;
 
-import java.util.Arrays;
+import math.Coordinate;
 
 /**
  * Created by jiri.peinlich on 20/01/2016.
  */
 public class Board {
 
-    int [][] board;
+    int[][] board;
 
     public Board(int i) {
         board = new int[i][i];
     }
 
     public void set(Coordinate c, int val) {
-        board[c.getX()][c.getY()]=val;
+        board[c.getX()][c.getY()] = val;
     }
 
-    public Coordinate find(int number){
+    public Coordinate find(int number) {
         for (int i = 0; i < board.length; i++) {
             int[] ints = board[i];
             for (int j = 0; j < ints.length; j++) {
                 int anInt = ints[j];
-                if (anInt == number){
+                if (anInt == number) {
                     return new Coordinate(i, j);
                 }
             }

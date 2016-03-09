@@ -1,5 +1,7 @@
 package knight;
 
+import math.Coordinate;
+
 /**
  * Created by jiri.peinlich on 20/01/2016.
  */
@@ -7,44 +9,44 @@ public enum Moves {
     ONE {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()+1,oldCoordinate.getY()+2);
+            return new Coordinate(oldCoordinate.getX() + 1, oldCoordinate.getY() + 2);
         }
-    },TWO {
+    }, TWO {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()+2,oldCoordinate.getY()+1);
+            return new Coordinate(oldCoordinate.getX() + 2, oldCoordinate.getY() + 1);
         }
-    },THREE {
+    }, THREE {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()+1,oldCoordinate.getY()-2);
+            return new Coordinate(oldCoordinate.getX() + 1, oldCoordinate.getY() - 2);
         }
-    },FOUR {
+    }, FOUR {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()+2,oldCoordinate.getY()-1);
+            return new Coordinate(oldCoordinate.getX() + 2, oldCoordinate.getY() - 1);
         }
-    },FIVE {
+    }, FIVE {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()-1,oldCoordinate.getY()+2);
+            return new Coordinate(oldCoordinate.getX() - 1, oldCoordinate.getY() + 2);
         }
-    },SIX {
+    }, SIX {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()-2,oldCoordinate.getY()+1);
+            return new Coordinate(oldCoordinate.getX() - 2, oldCoordinate.getY() + 1);
         }
-    },SEVEN {
+    }, SEVEN {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()-1,oldCoordinate.getY()-2);
+            return new Coordinate(oldCoordinate.getX() - 1, oldCoordinate.getY() - 2);
         }
-    },EIGHT {
+    }, EIGHT {
         @Override
         Coordinate newCoordinate(Coordinate oldCoordinate) {
-            return new Coordinate(oldCoordinate.getX()-2,oldCoordinate.getY()-1);
+            return new Coordinate(oldCoordinate.getX() - 2, oldCoordinate.getY() - 1);
         }
     };
-    
+
     abstract Coordinate newCoordinate(Coordinate oldCoordinate);
 }

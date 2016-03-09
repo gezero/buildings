@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>common</module>
         <module>buildings</module>
         <module>cars</module>
         <module>knight</module>

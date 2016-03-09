@@ -1,9 +1,9 @@
 package buildings;
 
+import math.Coordinate;
 import org.junit.Before;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -24,11 +24,7 @@ public class SilhouetteTest {
         buildings = new ArrayList<Building>();
 
         //TODO: put here your class;
-        silhouette = new Silhouette() {
-            public List<Coordinate> calculateSilhouette(Collection<Building> buildings) {
-                return null;
-            }
-        };
+        silhouette = new Solution();
     }
 
     @org.junit.Test
