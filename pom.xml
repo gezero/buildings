@@ -16,6 +16,7 @@
         <module>knight</module>
         <module>suffix-tree</module>
         <module>avl-tree</module>
+        <module>data-structures</module>
     </modules>
 
     <build>
