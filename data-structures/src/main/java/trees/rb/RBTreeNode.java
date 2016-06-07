@@ -1,28 +1,13 @@
 package trees.rb;
 
-import java.lang.ProcessBuilder.Redirect;
-
 /**
  * @author Jiri
  */
 public class RBTreeNode<Type extends Comparable<Type>>
 {
 
-    public enum Color
-    {
-        RED, BLACK;
-
-        public static Color of( RBTreeNode node ) {
-            if( node == null ) {
-                return BLACK;
-            }
-            return node.color;
-        }
-    }
-
     private Color color;
     private Type value;
-
     private RBTreeNode<Type> left;
     private RBTreeNode<Type> right;
     private RBTreeNode<Type> parent;
@@ -33,6 +18,31 @@ public class RBTreeNode<Type extends Comparable<Type>>
         this.right = right;
         this.parent = parent;
         this.color = Color.RED;
+    }
+
+    public int validate() {
+        int count = color == Color.BLACK ? 1 : 0;
+        if( color == Color.RED ) {
+            assert Color.of( left ) == Color.BLACK;
+            assert Color.of( right ) == Color.BLACK;
+        }
+        if( left == null && right == null ) {
+            return count + 1;
+        }
+        int l;
+        if( left == null ) {
+            l = 1;
+        } else {
+            l = left.validate();
+        }
+        int r;
+        if( right == null ) {
+            r = 1;
+        } else {
+            r = right.validate();
+        }
+        assert r == l;
+        return count + l;
     }
 
     public boolean contains( Type v ) {
@@ -46,18 +56,18 @@ public class RBTreeNode<Type extends Comparable<Type>>
 
     public RBTreeNode<Type> add( Type value ) {
         if( value.compareTo( this.value ) == 0 ) {
-            return this;
+            return root();
         }
         if( value.compareTo( this.value ) > 0 ) { // value > this.value
             if( right != null ) {
-                right.add( value );
+                return right.add( value );
             } else {
                 right = new RBTreeNode<>( value, null, null, this );
                 right.balanceInsert();
             }
         } else {
             if( left != null ) {
-                left.add( value );
+                return left.add( value );
             } else {
                 left = new RBTreeNode<>( value, null, null, this );
                 left.balanceInsert();
@@ -111,18 +121,25 @@ public class RBTreeNode<Type extends Comparable<Type>>
                 return child.root();
             }
 
-            return balance( child );
+            return balanceDelete( child );
 
         }
     }
 
-    private RBTreeNode<Type> balance( RBTreeNode<Type> child ) {
+    private Type max() {
+        if( right == null ) {
+            return value;
+        }
+        return right.max();
+    }
+
+    private RBTreeNode<Type> balanceDelete( RBTreeNode<Type> child ) {
         if( parent == null ) {
             return child;
         }
 
         RBTreeNode<Type> sibling = parent.right == child ? parent.left : parent.right;
-
+        assert sibling != null; // Because we removed a Black node and the child is also black, that means sibling has to exist
         if( sibling.color == Color.RED ) {
             assert parent.color == Color.BLACK; // canot have 2 reds after each other sibling is red
             parent.color = Color.RED;
@@ -132,13 +149,14 @@ public class RBTreeNode<Type extends Comparable<Type>>
             } else {
                 parent.rotateRight();
             }
-            return parent.root();
+            sibling = parent.right == child ? parent.left : parent.right;
+            assert Color.of( sibling ).equals( Color.BLACK );
         }
 
         if( parent.color == Color.BLACK && sibling.color == Color.BLACK && Color.of( sibling.left ) == Color.BLACK
                 && Color.of( sibling.right ) == Color.BLACK ) {
             sibling.color = Color.RED;
-            return balance( parent );
+            return parent.balanceDelete( parent );
         }
 
         if( parent.color == Color.RED && sibling.color == Color.BLACK && Color.of( sibling.left ) == Color.BLACK
@@ -148,16 +166,28 @@ public class RBTreeNode<Type extends Comparable<Type>>
             return parent.root();
         }
 
-        if( parent.left == child && sibling.color == Color.BLACK && Color.of( sibling.left ) == Color.RED ) {
+        if( parent.left == child && sibling.color == Color.BLACK && Color.of( sibling.left ) == Color.RED
+                && Color.of( sibling.right ) == Color.BLACK ) {
+            sibling.left.color = Color.BLACK;
+            sibling.color = Color.RED;
             sibling.rotateRight();
-        } else if( parent.right == child && sibling.color == Color.BLACK && Color.of( sibling.right ) == Color.RED ) {
+            sibling = parent.right == child ? parent.left : parent.right;
+        } else if( parent.right == child && sibling.color == Color.BLACK && Color.of( sibling.left ) == Color.BLACK
+                && Color.of( sibling.right ) == Color.RED ) {
+            sibling.right.color = Color.BLACK;
+            sibling.color = Color.RED;
             sibling.rotateLeft();
+            sibling = parent.right == child ? parent.left : parent.right;
         }
 
         if( parent.left == child ) {
             parent.rotateLeft();
+            assert sibling.right.color == Color.RED;
+            sibling.right.color = Color.BLACK;
         } else {
             parent.rotateRight();
+            assert sibling.left.color == Color.RED;
+            sibling.left.color = Color.BLACK;
         }
         sibling.color = parent.color;
         parent.color = Color.BLACK;
@@ -165,11 +195,7 @@ public class RBTreeNode<Type extends Comparable<Type>>
 
     }
 
-    private RBTreeNode<Type> deleteNode(){
-        if()
-    }
-
-    private RBTreeNode<Type> root() {
+    RBTreeNode<Type> root() {
         RBTreeNode<Type> n = this;
         while( n.parent != null ) {
             n = n.parent;
@@ -197,7 +223,7 @@ public class RBTreeNode<Type extends Comparable<Type>>
             uncle.color = Color.BLACK;
             grandParent.color = Color.RED;
             grandParent.balanceInsert();
-
+            return;
         }
 
         if( this == parent.right && parent == grandParent.left ) {
@@ -206,6 +232,8 @@ public class RBTreeNode<Type extends Comparable<Type>>
         } else if( this == parent.left && parent == grandParent.right ) {
             parent.rotateRight();
             right.insertCase5();
+        } else {
+            insertCase5();
         }
 
     }
@@ -296,6 +324,18 @@ public class RBTreeNode<Type extends Comparable<Type>>
             return grandParent.right;
         } else {
             return grandParent.left;
+        }
+    }
+
+    public enum Color
+    {
+        RED, BLACK;
+
+        public static Color of( RBTreeNode node ) {
+            if( node == null ) {
+                return BLACK;
+            }
+            return node.color;
         }
     }
 }

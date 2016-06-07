@@ -25,6 +25,8 @@ public class RBTree<Type extends Comparable<Type>> implements DataStructureInter
             root = new RBTreeNode<>( value, null, null, null );
             root.balanceInsert();
         }
+        assert root == root.root();
+//        root.validate();
         return this;
     }
 
@@ -32,6 +34,10 @@ public class RBTree<Type extends Comparable<Type>> implements DataStructureInter
     public DataStructureInterface<Type> remove( Type value ) {
         if( root != null ) {
             root = root.remove( value );
+        }
+        if( root != null ) {
+            assert root == root.root();
+//            root.validate();
         }
         return this;
     }

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
  */
 public abstract class GenericDataStructureTest
 {
-    private static final int LIMIT = 1000;
+    private static final int LIMIT = 100000;
     private static final int SEED =0;
     Random random = new Random( SEED );
     private DataStructureInterface.Factory<Integer> factory;
