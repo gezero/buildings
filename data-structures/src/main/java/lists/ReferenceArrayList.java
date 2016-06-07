@@ -3,6 +3,7 @@ package lists;
 import common.DataStructureInterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by jiri.peinlich on 31/05/2016.
@@ -22,7 +23,7 @@ public class ReferenceArrayList <Type extends Comparable<Type>> implements DataS
     }
 
     @Override public DataStructureInterface<Type> remove( Type value ) {
-        arrayList.remove( value );
+        arrayList.removeAll( Collections.singleton(value));
         return this;
     }
 
